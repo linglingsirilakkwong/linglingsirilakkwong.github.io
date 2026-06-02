@@ -889,3 +889,111 @@ a, button { transition: all .18s ease; }
   }
 }
 
+/* ---- schedule card 小尺寸与颜色区分 ---- */
+.schedule-event-card {
+  display: block;
+  padding: 10px 12px;
+  margin: 6px 0;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  background: #ffffff;
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease;
+  font-size: 14px;
+  line-height: 1.25;
+}
+.schedule-event-card:focus,
+.schedule-event-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(20,20,40,0.06);
+}
+
+/* 区分种类颜色：邝玲玲单人（主红色），LINGORM 双人（青色） */
+.schedule-event-card--lingling {
+  border-left: 4px solid var(--lingling);
+  background: linear-gradient(180deg, rgba(255,111,145,0.06), #fff 42%);
+}
+.schedule-event-card--lingorm {
+  border-left: 4px solid #0fb5a0; /* 青绿 */
+  background: linear-gradient(180deg, rgba(15,181,160,0.03), #fff);
+}
+
+.schedule-event-meta { display:flex; align-items:center; gap:8px; margin-bottom:6px; }
+.schedule-event-time { font-weight:700; color:#0b3b66; min-width:72px; }
+.new-badge { background:#ff5a5f; color:#fff; padding:2px 6px; border-radius:12px; font-size:12px; margin-left:6px; }
+
+/* 标题/副标题 */
+.schedule-event-title { font-weight:600; color:#07203b; margin-bottom:4px; }
+.schedule-event-subtitle { color:#445b78; font-size:13px; }
+
+/* 日数字体更大、更显眼 */
+.schedule-day-left .schedule-day-number {
+  font-size:34px;
+  font-weight:700;
+  color:#2b7be9;
+}
+.schedule-day-left .schedule-day-date { color:#6b7c93; font-size:12px; }
+
+/* is-multi 两个活动并排显示 */
+.schedule-day-events.is-multi {
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.schedule-day-events.is-multi .schedule-event-card { flex:1 1 calc(50% - 6px); min-width:200px; }
+
+/* 侧边栏样式 */
+.event-sidebar {
+  position: fixed;
+  right: -420px;
+  top: 0;
+  width: 380px;
+  max-width: 92%;
+  height: 100vh;
+  background: #fff;
+  box-shadow: -12px 0 40px rgba(12,24,48,0.12);
+  transition: right .28s ease;
+  z-index: 1200;
+  overflow-y: auto;
+  padding: 20px;
+}
+.event-sidebar.hidden { right: -420px; }
+.event-sidebar:not(.hidden) { right: 0; }
+.sidebar-close {
+  position:absolute;
+  left:10px;
+  top:8px;
+  background:transparent;
+  border:0;
+  font-size:24px;
+  color:#334155;
+  cursor:pointer;
+}
+.sidebar-inner h3 { margin-top: 8px; color:#06213a; font-size:18px; }
+.sidebar-inner .muted { color:#6b7c93; font-size:13px; margin-bottom:10px; }
+.sidebar-meta { font-size:13px; color:#2b3b51; margin-bottom:8px; }
+
+#materials-list { list-style:none; padding:0; margin:0; }
+#materials-list li { margin:8px 0; }
+#materials-list a {
+  display:inline-block;
+  padding:8px 10px;
+  background:#f0f7ff;
+  color:#0b66d1;
+  border-radius:6px;
+  text-decoration:none;
+  font-weight:600;
+  transition: background .12s;
+}
+#materials-list a:hover { background:#e6f0ff; }
+
+/* body 状态：打开侧边栏时避免页面水平滚动 */
+body.has-sidebar-open { overflow: hidden; }
+
+/* 响应式 */
+@media (max-width:800px) {
+  .schedule-day-events.is-multi .schedule-event-card { flex: 1 1 100%; }
+  .event-sidebar { width: 100%; right: -100%; }
+  .event-sidebar:not(.hidden) { right: 0; }
+}
+

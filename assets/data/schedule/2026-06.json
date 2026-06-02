@@ -77,6 +77,24 @@
     "tagText": "邝玲玲单人",
     "title": "线下Top活动 + 妮维雅告白夜 直播",
     "subtitle": "NIVEA Love Night",
-    "new": false
+    "new": false,
+    "materials": [
+      {
+        "name": "曼谷机场出发视频",
+        "url": "https://weibo.com/6052943339/R25b5ejmn"
+      },
+      {
+        "name": "曼谷机场出发图",
+        "url": "https://weibo.com/7954861350/R24XEeMNA"
+      },
+      {
+        "name": "上海机场到达",
+        "url": "https://weibo.com/1777428517/R27pThMOF"
+      },
+      {
+        "name": "上海快拍",
+        "url": "https://weibo.com/1777428517/R27BDw5OD"
+      }
+    ]
   }
 ]

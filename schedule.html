@@ -42,6 +42,21 @@
     </section>
   </main>
 
+  <!-- 在 main 结束后、site-footer 之前插入： -->
+  <aside id="event-sidebar" class="event-sidebar hidden" aria-hidden="true" role="dialog" aria-label="活动详情">
+    <button id="sidebar-close" class="sidebar-close" aria-label="关闭">×</button>
+    <div class="sidebar-inner">
+      <h3 id="sidebar-title">活动标题</h3>
+      <p id="sidebar-subtitle" class="muted">活动副标题</p>
+      <div id="sidebar-meta" class="sidebar-meta"></div>
+      <hr>
+      <div id="sidebar-materials">
+        <h4>相关物料</h4>
+        <ul id="materials-list"></ul>
+      </div>
+    </div>
+  </aside>
+
   <div id="site-footer"></div>
 
 <script>
@@ -78,8 +93,9 @@
 
   function buildEventCard(item) {
     const kind = item.kind === 'lingorm' ? 'lingorm' : 'lingling';
-
     const card = createEl('div', `schedule-event-card schedule-event-card--${kind}`);
+    card.setAttribute('role', 'button');
+    card.tabIndex = 0;
 
     const meta = createEl('div', 'schedule-event-meta');
     const time = createEl('span', 'schedule-event-time', item.time || '00:00');
@@ -106,8 +122,24 @@
     if (item.subtitle) card.appendChild(subtitle);
     card.appendChild(tagRow);
 
+    // 把 item 数据绑定到 DOM（方便侧边栏读取）
+    card._eventData = item;
+
+    // 点击或回车打开侧边栏
+    function onOpen() {
+      openSidebar(item);
+    }
+    card.addEventListener('click', onOpen);
+    card.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        onOpen();
+      }
+    });
+
     return card;
   }
+
 
   function buildDayGroup(group) {
     const first = group.events[0];
@@ -202,6 +234,59 @@
       container.innerHTML = '<div class="schedule-empty">日程配置加载失败，请检查 assets/data/schedule/index.json</div>';
     }
   }
+
+  /* --- 侧边栏逻辑 --- */
+  const sidebar = document.getElementById('event-sidebar');
+  const sidebarCloseBtn = document.getElementById('sidebar-close');
+  const sidebarTitle = document.getElementById('sidebar-title');
+  const sidebarSubtitle = document.getElementById('sidebar-subtitle');
+  const sidebarMeta = document.getElementById('sidebar-meta');
+  const materialsList = document.getElementById('materials-list');
+
+  function openSidebar(eventObj) {
+    if (!sidebar) return;
+    sidebarTitle.textContent = eventObj.title || '活动详情';
+    sidebarSubtitle.textContent = eventObj.subtitle || '';
+    sidebarMeta.innerHTML = `<div class="sidebar-time">${eventObj.date} ${eventObj.time || ''}</div>
+                             <div class="sidebar-tag">${eventObj.tagText || ''}</div>`;
+
+    // 填充 materials
+    materialsList.innerHTML = '';
+    if (Array.isArray(eventObj.materials) && eventObj.materials.length) {
+      eventObj.materials.forEach(mat => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = mat.url || '#';
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.textContent = mat.name || mat.url;
+        li.appendChild(a);
+        materialsList.appendChild(li);
+      });
+    } else {
+      materialsList.innerHTML = '<li class="muted">暂无物料</li>';
+    }
+
+    sidebar.classList.remove('hidden');
+    sidebar.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('has-sidebar-open');
+    // 可聚焦关闭按钮以便键盘用户
+    sidebarCloseBtn && sidebarCloseBtn.focus();
+  }
+
+  function closeSidebar() {
+    if (!sidebar) return;
+    sidebar.classList.add('hidden');
+    sidebar.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('has-sidebar-open');
+  }
+
+  sidebarCloseBtn && sidebarCloseBtn.addEventListener('click', closeSidebar);
+  // ESC 关闭
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !sidebar.classList.contains('hidden')) closeSidebar();
+  });
+
 
   initSchedule();
 </script>
