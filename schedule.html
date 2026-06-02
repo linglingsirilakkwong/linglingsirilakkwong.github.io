@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>日程表 — 邝玲玲</title>
+  <meta name="description" content="邝玲玲公开日程、活动与行程" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script defer src="assets/js/site.js"></script>
+</head>
+<body class="lang-zh">
+  <div id="site-header"></div>
+
+  <main>
+    <section id="schedule" class="section section-anchor">
+      <div class="container">
+        <div class="section-title">
+          <h2>名人日程表</h2>
+          <p>按月查看邝玲玲单人活动与 LINGORM 双人活动</p>
+        </div>
+
+        <div class="schedule-toolbar">
+          <div class="schedule-toolbar-left">
+            <label for="month">选择月份：</label>
+            <select id="month" class="month-select" aria-label="选择月份"></select>
+          </div>
+
+          <div class="schedule-legend">
+            <span class="tag tag-lingling">邝玲玲单人</span>
+            <span class="tag tag-lingorm">LINGORM 双人</span>
+          </div>
+        </div>
+
+        <div id="schedule-container" class="schedule-container" aria-live="polite"></div>
+
+        <div class="schedule-note">
+          注：日程以公开信息为准，可能会随时更新。
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+<script>
+  const manifestUrl = 'assets/data/schedule/index.json';
+  const monthSelect = document.getElementById('month');
+  const container = document.getElementById('schedule-container');
+  const monthFiles = {};
+
+  function createEl(tag, className, text) {
+    const el = document.createElement(tag);
+    if (className) el.className = className;
+    if (text !== undefined && text !== null) el.textContent = text;
+    return el;
+  }
+
+  async function fetchJson(url) {
+    const res = await fetch(url, { cache: 'no-store' });
+    if (!res.ok) throw new Error(`无法加载文件：${url}`);
+    return await res.json();
+  }
+
+  function groupByDate(items) {
+    const map = new Map();
+    items.forEach(item => {
+      const key = item.date;
+      if (!map.has(key)) map.set(key, []);
+      map.get(key).push(item);
+    });
+
+    return Array.from(map.entries())
+      .map(([date, events]) => ({ date, events }))
+      .sort((a, b) => new Date(b.date) - new Date(a.date));
+  }
+
+  function buildEventCard(item) {
+    const kind = item.kind === 'lingorm' ? 'lingorm' : 'lingling';
+
+    const card = createEl('div', `schedule-event-card schedule-event-card--${kind}`);
+
+    const meta = createEl('div', 'schedule-event-meta');
+    const time = createEl('span', 'schedule-event-time', item.time || '00:00');
+    meta.appendChild(time);
+
+    if (item.new) {
+      meta.appendChild(createEl('span', 'new-badge', 'NEW'));
+    }
+
+    const title = createEl('div', 'schedule-event-title', item.title || '');
+    const subtitle = createEl('div', 'schedule-event-subtitle', item.subtitle || '');
+
+    const tag = createEl(
+      'span',
+      `tag ${kind === 'lingling' ? 'tag-lingling' : 'tag-lingorm'}`,
+      item.tagText || (kind === 'lingling' ? '邝玲玲单人' : 'LINGORM 双人')
+    );
+
+    const tagRow = createEl('div', 'schedule-tag-row');
+    tagRow.appendChild(tag);
+
+    card.appendChild(meta);
+    if (item.title) card.appendChild(title);
+    if (item.subtitle) card.appendChild(subtitle);
+    card.appendChild(tagRow);
+
+    return card;
+  }
+
+  function buildDayGroup(group) {
+    const first = group.events[0];
+    const dayBlock = createEl('div', 'schedule-day-group');
+
+    const dayLeft = document.createElement('div');
+    dayLeft.className = 'schedule-day-left';
+    dayLeft.innerHTML = `
+      <div class="schedule-day-number">${first.day || first.date.slice(-2)}</div>
+      <div class="schedule-day-date">${first.date}</div>
+    `;
+
+    const dayRight = createEl(
+      'div',
+      `schedule-day-events ${group.events.length > 1 ? 'is-multi' : 'is-single'}`
+    );
+
+    group.events.forEach(item => {
+      dayRight.appendChild(buildEventCard(item));
+    });
+
+    dayBlock.appendChild(dayLeft);
+    dayBlock.appendChild(dayRight);
+
+    return dayBlock;
+  }
+
+  async function renderMonth(monthKey) {
+    const file = monthFiles[monthKey];
+    const monthLabel = monthSelect.options[monthSelect.selectedIndex]?.textContent || monthKey;
+
+    container.innerHTML = '<div class="schedule-empty">日程加载中…</div>';
+
+    if (!file) {
+      container.innerHTML = '<div class="schedule-empty">未找到该月份的日程文件</div>';
+      return;
+    }
+
+    try {
+      const items = await fetchJson(file);
+
+      if (!Array.isArray(items)) {
+        throw new Error(`JSON 格式错误：${file} 必须是数组`);
+      }
+
+      if (!items.length) {
+        container.innerHTML = `<div class="schedule-empty">${monthLabel}暂无公开日程</div>`;
+        return;
+      }
+
+      const monthHeader = createEl('div', 'schedule-month-title', monthLabel);
+      const list = createEl('div', 'schedule-day-list');
+
+      const groups = groupByDate(items);
+      groups.forEach(group => list.appendChild(buildDayGroup(group)));
+
+      container.innerHTML = '';
+      container.appendChild(monthHeader);
+      container.appendChild(list);
+    } catch (err) {
+      console.error(err);
+      container.innerHTML = '<div class="schedule-empty">日程加载失败，请检查 JSON 文件路径或格式。</div>';
+    }
+  }
+
+  async function initSchedule() {
+    try {
+      const manifest = await fetchJson(manifestUrl);
+
+      if (!manifest || !Array.isArray(manifest.months)) {
+        throw new Error('index.json 格式错误：必须包含 months 数组');
+      }
+
+      monthSelect.innerHTML = '';
+
+      manifest.months.forEach(month => {
+        const option = createEl('option');
+        option.value = month.value;
+        option.textContent = month.label;
+        monthSelect.appendChild(option);
+        monthFiles[month.value] = month.file;
+      });
+
+      const defaultMonth = manifest.default || (manifest.months[0] && manifest.months[0].value);
+      if (!defaultMonth) throw new Error('index.json 中没有可用月份');
+
+      monthSelect.value = defaultMonth;
+      monthSelect.addEventListener('change', () => renderMonth(monthSelect.value));
+      await renderMonth(defaultMonth);
+    } catch (err) {
+      console.error(err);
+      container.innerHTML = '<div class="schedule-empty">日程配置加载失败，请检查 assets/data/schedule/index.json</div>';
+    }
+  }
+
+  initSchedule();
+</script>
+</body>
+</html>

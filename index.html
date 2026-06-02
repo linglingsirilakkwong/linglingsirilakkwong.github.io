@@ -1,376 +1,195 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>邝玲玲 LingLing Kwong 个人主页</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        :root {
-            --bg-color: #F8F7FC;       /* 明快清新的浅紫底色 */
-            --card-bg: #FFFFFF;        /* 纯白卡片背景 */
-            --text-main: #33303C;      /* 主文本深色 */
-            --text-muted: #757185;     /* 次要文本灰色 */
-            --accent-color: #8B67E5;   /* 明亮的紫色点缀 */
-            --accent-hover: #7149CC;   /* 悬停时的深紫色 */
-            --border-color: #E8E5F2;   /* 浅色边框 */
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body { 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
-            background: var(--bg-color); 
-            color: var(--text-main); 
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        /* 顶部网格布局 */
-        .hero-section {
-            display: grid;
-            grid-template-columns: 250px 1fr 1fr;
-            gap: 40px;
-            margin-bottom: 50px;
-        }
-
-        /* 左侧：头像与社交媒体 */
-        .profile-sidebar { 
-            text-align: center; 
-            background: var(--card-bg);
-            padding: 30px 20px;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(139, 103, 229, 0.05);
-        }
-        .avatar {
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid #FFF;
-            box-shadow: 0 8px 24px rgba(139, 103, 229, 0.15);
-            margin-bottom: 20px;
-        }
-        .name-title { font-size: 22px; font-weight: 700; margin-bottom: 5px; color: var(--text-main); }
-        .tags { color: var(--text-muted); font-size: 13px; margin-bottom: 20px; line-height: 1.5; }
-        
-        .social-icons {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-        .social-icons a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 38px;
-            height: 38px;
-            background: #F1EFF9;
-            color: var(--accent-color);
-            border-radius: 50%;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-        .social-icons a:hover { 
-            background: var(--accent-color); 
-            color: #FFF;
-        }
-        
-        .btn-profile {
-            display: inline-block;
-            width: 100%;
-            padding: 11px;
-            background: var(--accent-color);
-            color: #FFF;
-            text-decoration: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            transition: 0.3s;
-        }
-        .btn-profile:hover { background: var(--accent-hover); }
-
-        /* 中间：档案信息 */
-        .profile-details {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(139, 103, 229, 0.05);
-        }
-        .section-title {
-            color: var(--accent-color);
-            font-size: 18px;
-            margin-bottom: 20px;
-            font-weight: 600;
-            border-left: 4px solid var(--accent-color);
-            padding-left: 10px;
-        }
-        .info-grid {
-            display: grid;
-            grid-template-columns: 100px 1fr;
-            gap: 14px 20px;
-            font-size: 14px;
-        }
-        .info-label { color: var(--text-muted); font-weight: 500; }
-        .info-value { color: var(--text-main); }
-
-        /* 右侧：简介 */
-        .profile-bio {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(139, 103, 229, 0.05);
-        }
-        .bio-text {
-            color: var(--text-main);
-            font-size: 14px;
-            line-height: 1.8;
-        }
-
-        /* 品牌模块 */
-        .brands-section { 
-            margin-bottom: 50px; 
-            background: var(--card-bg);
-            padding: 40px 20px;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(139, 103, 229, 0.05);
-        }
-        .brand-list {
-            display: flex;
-            gap: 40px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .brand-item {
-            text-align: center;
-            font-size: 14px;
-            width: 120px;
-        }
-        .brand-logo {
-            width: 70px;
-            height: 70px;
-            background: #F1EFF9;
-            border-radius: 50%;
-            margin: 0 auto 10px auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--accent-color);
-            font-weight: bold;
-            font-size: 14px;
-            border: 1px solid var(--border-color);
-        }
-        .brand-name { color: var(--text-main); font-weight: 600; margin-bottom: 2px; }
-        .brand-cat { color: var(--text-muted); font-size: 12px; }
-
-        /* 影视作品模块 */
-        .movies-section { 
-            margin-bottom: 50px; 
-            background: var(--card-bg);
-            padding: 40px 20px;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(139, 103, 229, 0.05);
-        }
-        .movies-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 20px;
-        }
-        .movie-card {
-            background: var(--bg-color);
-            border-radius: 12px;
-            overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-            border: 1px solid var(--border-color);
-        }
-        .movie-card:hover { 
-            transform: translateY(-5px); 
-            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-        }
-        .movie-cover {
-            width: 100%;
-            height: 280px;
-            background: #EAE7F2; 
-            object-fit: cover;
-        }
-        .movie-info { padding: 15px; background: #FFF; }
-        .movie-title { font-size: 15px; font-weight: 600; margin-bottom: 5px; color: var(--text-main); }
-        .movie-year { color: var(--text-muted); font-size: 12px; }
-
-        /* 隐秘的授权按钮（在明亮背景下降低默认可见度） */
-        .secret-auth {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            opacity: 0.30; 
-            transition: all 0.4s ease;
-            z-index: 1000;
-        }
-        .secret-auth:hover {
-            opacity: 1;
-            transform: scale(1.05);
-        }
-        .secret-auth a {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 14px;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(4px);
-            color: #A09DB0;
-            text-decoration: none;
-            border-radius: 20px;
-            font-size: 12px;
-            border: 1px solid #E0DDEB;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        .secret-auth a:hover {
-            color: #DF4759;
-            border-color: #F8D7DA;
-            background: #FFF;
-        }
-
-        /* 响应式适配 */
-        @media (max-width: 900px) {
-            .hero-section { grid-template-columns: 1fr; gap: 20px; }
-            .profile-sidebar { margin-bottom: 10px; }
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>LingLing — Home</title>
+  <meta name="description" content="LingLing Sirilak Kwong — Official personal homepage" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script defer src="assets/js/site.js"></script>
 </head>
-<body>
+<body class="lang-zh">
+  <!-- header partial will be loaded into this element -->
+  <div id="site-header"></div>
 
-    <div class="container">
-        <div class="hero-section">
-            <div class="profile-sidebar">
-                <img src="https://github.com/linglingsirilakkwong/linglingsirilakkwong.github.io/blob/main/profile.jpg?raw=true" alt="LingLing Sirilak Kwong" class="avatar">
-                <h1 class="name-title">LingLing Sirilak</h1>
-                <div class="tags">粉丝名：天使金毛（Angel Golden）<br>#linglingkwong #หลิงหลิงคอง</div>
-                
-                <div class="social-icons">
-                    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="#" title="X (Twitter)"><i class="fab fa-twitter"></i></a>
-                    <a href="#" title="TikTok"><i class="fab fa-tiktok"></i></a>
-                    <a href="#" title="微博"><i class="fab fa-weibo"></i></a>
-                </div>
-                
-                <a href="#" class="btn-profile">访问详情页面</a>
-            </div>
+  <main>
+    <section id="home" class="hero section-anchor">
+      <div class="container hero-grid">
+        <!-- left profile card -->
+        <div class="hero-card profile-card">
+          <img class="avatar" src="assets/images/profile.jpg" alt="LingLing Sirilak Kwong">
+          <h1 class="name">LingLing Sirilak Kwong</h1>
 
-            <div class="profile-details">
-                <h2 class="section-title">个人档案</h2>
-                <div class="info-grid">
-                    <div class="info-label">别名</div>
-                    <div class="info-value">LingLing Kwong, 00K, 邝玲玲</div>
-                    
-                    <div class="info-label">泰文原名</div>
-                    <div class="info-value">หลิงหลิง ศิริลักษณ์ คอง</div>
-                    
-                    <div class="info-label">出生日期</div>
-                    <div class="info-value">1995年5月11日</div>
-                    
-                    <div class="info-label">出生地</div>
-                    <div class="info-value">中国香港</div>
-                    
-                    <div class="info-label">身高</div>
-                    <div class="info-value">168cm (5'6")</div>
-                    
-                    <div class="info-label">国籍</div>
-                    <div class="info-value">泰国</div>
-                    
-                    <div class="info-label">毕业院校</div>
-                    <div class="info-value">孔敬大学国际学院 - 旅游管理学士学位</div>
-                    
-                    <div class="info-label">血型</div>
-                    <div class="info-value">AB型</div>
-                    
-                    <div class="info-label">宠物伙伴</div>
-                    <div class="info-value">🐕 Chasiu (叉烧 - 金毛寻回犬); 🐕 Tofu (豆腐 - 金毛寻回犬)</div>
-                </div>
-            </div>
+          <div class="subtitle">
+            <span data-lang="zh">天使金毛 · 粉丝名：Angel Golden</span>
+            <span data-lang="en">Angel Golden · Fan Name: Angel Golden</span>
+          </div>
 
-            <div class="profile-bio">
-                <h2 class="section-title">个人简介</h2>
-                <div class="bio-text">
-                    "LingLing" Sirilak Kwong（邝玲玲）在中国香港出生并长大。17岁时移居至泰国。她的父亲是香港人，母亲来自泰国加拉信府。她精通四种语言：粤语、普通话、英语和泰语。
-                    <br><br>
-                    2018年，她荣获孔敬府 Khao Suan Kwang 选美大赛冠军。毕业于孔敬大学国际学院旅游管理专业后，目前作为泰国第3电视台（CH3）旗下的签约女演员活跃于演艺圈。
-                </div>
-            </div>
+          <div class="tags">
+            <span data-lang="zh">#linglingkwong #หลิงหลิงคอง<br>中 / 英 / 泰 / 粤语</span>
+            <span data-lang="en">#linglingkwong #หลิงหลิงคอง<br>Chinese / English / Thai / Cantonese</span>
+          </div>
+
+          <div class="socials">
+            <a href="https://www.instagram.com/linglingkwong/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <i class="fa-brands fa-instagram"></i>
+            </a>
+            <a href="https://x.com/linglingsirilak" target="_blank" rel="noopener noreferrer" aria-label="X">
+              <i class="fa-brands fa-x-twitter"></i>
+            </a>
+            <a href="https://www.tiktok.com/@linglingkwong" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+              <i class="fa-brands fa-tiktok"></i>
+            </a>
+            <a href="https://weibo.com/u/7884299354" target="_blank" rel="noopener noreferrer" aria-label="Weibo">
+              <i class="fa-brands fa-weibo"></i>
+            </a>
+            <a href="https://ch3plus.com/artists/451" target="_blank" rel="noopener noreferrer" aria-label="CH3 Artist Profile">
+              <i class="fa-solid fa-circle-play"></i>
+            </a>
+          </div>
+
+          <div class="cta-row">
+            <a class="btn btn-primary" href="works.html"><i class="fa-solid fa-clapperboard"></i><span data-lang="zh">查看作品</span><span data-lang="en">View Works</span></a>
+            <a class="btn btn-secondary" href="profile.html"><i class="fa-solid fa-user"></i><span data-lang="zh">了解更多</span><span data-lang="en">Learn More</span></a>
+          </div>
         </div>
 
-        <div class="brands-section">
-            <h2 class="section-title" style="text-align: center; border: none; padding: 0;">代言 / 旗下品牌</h2>
-            <div class="brand-list" style="margin-top: 25px;">
-                <div class="brand-item">
-                    <div class="brand-logo">AW</div>
-                    <div class="brand-name">AlwaysWonder</div>
-                    <div class="brand-cat">时尚服饰</div>
-                </div>
-                <div class="brand-item">
-                    <div class="brand-logo">KKR</div>
-                    <div class="brand-name">Kwong Kee Roast</div>
-                    <div class="brand-cat">餐饮食品</div>
-                </div>
-                <div class="brand-item">
-                    <div class="brand-logo">KP</div>
-                    <div class="brand-name">Kwong Pastry</div>
-                    <div class="brand-cat">糕点食品</div>
-                </div>
-                <div class="brand-item">
-                    <div class="brand-logo" style="background:#EBF3FC; color:#1a4d8c;">LD</div>
-                    <div class="brand-name">Lo's Darlene</div>
-                    <div class="brand-cat">时尚配饰</div>
-                </div>
+        <!-- right hero/main card -->
+        <div class="hero-card hero-main">
+          <div class="headline">
+            <div class="kicker">
+              <i class="fa-solid fa-sparkles"></i>
+              <span data-lang="zh">中泰混血 · 泰娱顶流</span>
+              <span data-lang="en">Fresh, Bright, Bilingual, Official Style</span>
             </div>
+
+            <h2 class="hero-title">
+              <span data-lang="zh">邝玲玲</span>
+              <span data-lang="en">LingLing Sirilak Kwong<br>Official Personal Home</span>
+            </h2>
+
+            <p class="hero-copy">
+              <span data-lang="zh">
+                邝玲玲（LingLing Sirilak Kwong，泰文名：ศิริลักษณ์ คอง）出生于中国香港，17 岁后移居泰国发展。她为泰国第 3 电视台旗下演员、模特与节目主持人，熟练使用粤语、普通话、英语与泰语，代表作包括《直到天空迎来太阳》、《亲爱的玛卡莉》、《我们的秘密》、《只有你》等。
+              </span>
+              <span data-lang="en">
+                LingLing Sirilak Kwong (Thai name: ศิริลักษณ์ คอง) was born in Hong Kong and later moved to Thailand at 17. She is an actress, model and host under Channel 3, fluent in Cantonese, Mandarin, English and Thai. Notable works include Until the Sky’s the Sun, The Dear Lady, The Secret of Us and Only You.
+              </span>
+            </p>
+
+            <div class="hero-stats">
+              <div class="stat">
+                <b>1995</b>
+                <span data-lang="zh">出生于香港（1995-05-11）</span>
+                <span data-lang="en">Born in Hong Kong (1995-05-11)</span>
+              </div>
+              <div class="stat">
+                <b>4</b>
+                <span data-lang="zh">粤语 / 普通话 / 英语 / 泰语</span>
+                <span data-lang="en">Cantonese / Mandarin / English / Thai</span>
+              </div>
+              <div class="stat">
+                <b>2019</b>
+                <span data-lang="zh">签约泰国第 3 电视台（Channel 3）</span>
+                <span data-lang="en">Joined Channel 3 (2019)</span>
+              </div>
+              <div class="stat">
+                <b>2024</b>
+                <span data-lang="zh">《我们的秘密》让关注度上升</span>
+                <span data-lang="en">Gained wider recognition with The Secret of Us (2024)</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-highlight">
+            <div class="mini-card">
+              <h3><span data-lang="zh">早年与教育</span><span data-lang="en">Early Life & Education</span></h3>
+              <p>
+                <span data-lang="zh">邝玲玲在香港成长，2007 年毕业于圣安当小学，随后入读慕光英文书院，17 岁回到泰国完成高中并于 2018 年毕业于孔敬大学国际学院旅游管理专业。</span>
+                <span data-lang="en">She grew up in Hong Kong, attended Saint Andrews and Mu Kuang English School, returned to Thailand at 17 to finish high school, and graduated from Khon Kaen University International College (B.A., Tourism Management) in 2018.</span>
+              </p>
+            </div>
+
+            <div class="mini-card">
+              <h3><span data-lang="zh">职业概览</span><span data-lang="en">Career Snapshot</span></h3>
+              <p>
+                <span data-lang="zh">2018 年获孔敬 Khao Suan Kwang 选美冠军；2019 年签约 Channel 3；2020 年出演首部电视剧并逐步担任主演与综艺主持。</span>
+                <span data-lang="en">Won the Khao Suan Kwang pageant in 2018; signed with Channel 3 in 2019; debuted on TV in 2020 and later took leading roles and hosting projects.</span>
+              </p>
+            </div>
+
+            <div class="mini-card">
+              <h3><span data-lang="zh">代表作一览</span><span data-lang="en">Key Works</span></h3>
+              <p>
+                <span data-lang="zh">《直到天空迎来太阳》《亲爱的玛卡莉》《皇家医生》《我们的秘密》《只有你》 等。</span>
+                <span data-lang="en">Until the Sky’s the Sun; The Dear Lady; Doctor Chao; The Secret of Us; Only You; and more.</span>
+              </p>
+            </div>
+
+            <div class="mini-card">
+              <h3><span data-lang="zh">持续更新</span><span data-lang="en">Ongoing Updates</span></h3>
+              <p>
+                <span data-lang="zh">本主页可持续补充奖项、演出、杂志与粉丝活动等信息（来源：百度百科、维基百科等公开资料）。</span>
+                <span data-lang="en">This site will be updated with awards, performances, magazine covers and fan events over time (sources: Baidu Baike, Wikipedia, public sources).</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 可选：重要节点时间线（简洁版） -->
+    <section class="section">
+      <div class="container">
+        <div class="section-title">
+          <h2><span data-lang="zh">重要节点</span><span data-lang="en">Milestones</span></h2>
+          <p><span data-lang="zh">历年重要成长与职业节点</span><span data-lang="en">Key personal and career milestones</span></p>
         </div>
 
-        <div class="movies-section">
-            <h2 class="section-title" style="text-align: center; border: none; padding: 0;">最新影视作品</h2>
-            <div class="movies-grid" style="margin-top: 25px;">
-                <div class="movie-card">
-                    <div class="movie-cover"></div>
-                    <div class="movie-info">
-                        <div class="movie-title">In Love Forever</div>
-                        <div class="movie-year">电视剧 (2026)</div>
-                    </div>
-                </div>
-                <div class="movie-card">
-                    <div class="movie-cover"></div>
-                    <div class="movie-info">
-                        <div class="movie-title">Only You (只有你)</div>
-                        <div class="movie-year">电视剧 (2025)</div>
-                    </div>
-                </div>
-                <div class="movie-card">
-                    <div class="movie-cover"></div>
-                    <div class="movie-info">
-                        <div class="movie-title">My Cherie Amour</div>
-                        <div class="movie-year">电视剧 (2024)</div>
-                    </div>
-                </div>
-                <div class="movie-card">
-                    <div class="movie-cover"></div>
-                    <div class="movie-info">
-                        <div class="movie-title">Dhevaprom: Jaipisut</div>
-                        <div class="movie-year">电视剧 (2024)</div>
-                    </div>
-                </div>
+        <div class="timeline">
+          <div class="timeline-row">
+            <div class="date">1995</div>
+            <div class="content">
+              <strong><span data-lang="zh">出生于中国香港</span><span data-lang="en">Born in Hong Kong</span></strong><br>
+              <span data-lang="zh">1995 年 5 月 11 日出生。</span>
+              <span data-lang="en">Born May 11, 1995.</span>
             </div>
+          </div>
+
+          <div class="timeline-row">
+            <div class="date">2018</div>
+            <div class="content">
+              <strong><span data-lang="zh">获选孔敬选美冠军</span><span data-lang="en">Won pageant</span></strong><br>
+              <span data-lang="zh">2018 年 Khao Suan Kwang 冠军。</span>
+              <span data-lang="en">Won Khao Suan Kwang pageant.</span>
+            </div>
+          </div>
+
+          <div class="timeline-row">
+            <div class="date">2019</div>
+            <div class="content">
+              <strong><span data-lang="zh">签约 Channel 3</span><span data-lang="en">Signed to Channel 3</span></strong><br>
+              <span data-lang="zh">正式加入泰国第 3 电视台。</span>
+              <span data-lang="en">Joined Channel 3 as an artist.</span>
+            </div>
+          </div>
+
+          <div class="timeline-row">
+            <div class="date">2020–</div>
+            <div class="content">
+              <strong><span data-lang="zh">影视与主持并行</span><span data-lang="en">Acting & Hosting</span></strong><br>
+              <span data-lang="zh">从《直到天空迎来太阳》到后续多部电视剧与综艺主持。</span>
+              <span data-lang="en">From her debut Until the Sky’s the Sun to many dramas and hosting roles.</span>
+            </div>
+          </div>
         </div>
-    </div>
+      </div>
+    </section>
+  </main>
 
-    <div class="secret-auth">
-        <a href="https://auth-system-moi2.onrender.com/secure" target="_blank">
-            <i class="fas fa-shield-alt"></i> 授权验证系统
-        </a>
-    </div>
-
+  <!-- footer partial will be loaded into this element -->
+  <div id="site-footer"></div>
 </body>
 </html>

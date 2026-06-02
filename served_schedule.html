@@ -1,0 +1,281 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>æ¥ç¨è¡¨ â éç²ç² / Schedule</title>
+  <meta name="description" content="æ´»å¨å®æãææä¸è¡ç¨" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    /* è¥ç«ç¹å·²æå¨å± style è¦çï¼æ¬åèæ ·å¼ä½ä¸ºè¡¥å */
+    .controls { display:flex; gap:12px; align-items:center; margin:18px 0; }
+    .controls .legend { margin-left:auto; color:var(--muted); font-size:14px; display:flex; gap:10px; align-items:center; }
+    .legend .item { display:flex; gap:8px; align-items:center; }
+  </style>
+</head>
+<body class="lang-zh">
+  <div id="site-header"></div>
+
+  <main>
+    <section id="schedule" class="section section-anchor">
+      <div class="container">
+        <div class="section-title">
+          <h2>åäººæ¥ç¨è¡¨</h2>
+          <p>æææ¥çå¬å¼ä¸åéæ´»å¨ï¼ä¸é¢ä»åæ­¥å¾çä¸­çéç²ç² / LINGORM ç 2026 å¹´ 6 ææ¥ç¨ï¼</p>
+        </div>
+
+        <div class="controls">
+          <label for="month" style="font-weight:700;color:var(--text)">éæ©æä»½ï¼</label>
+          <select id="month" class="select month-select" aria-label="éæ©æä»½">
+            <option value="2026-06" selected>2026å¹´06æ</option>
+            <option value="2026-07">2026å¹´07æ</option>
+            <option value="2026-05">2026å¹´05æ</option>
+            <option value="2026-08">2026å¹´08æ</option>
+          </select>
+
+          <div class="legend">
+            <div class="item"><span class="tag tag-lingling">éç²ç²</span></div>
+            <div class="item"><span class="tag tag-lingorm">LINGORM</span></div>
+          </div>
+        </div>
+
+        <div id="schedule-container">
+          <!-- æ¶é´çº¿æ¸²æå°è¿é -->
+        </div>
+
+        <p style="margin-top:16px;color:var(--muted);font-size:13px;">
+          è¯´æï¼æ¥ç¨ä»¥å¬å¼ä¿¡æ¯ä¸ºåï¼å¯è½éæ¶è°æ´ãå¦éåå¡åä½ææ´»å¨éçº¦ï¼è¯·èç³»å®æ¹ç»çºªå¢éã
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script>
+    // ä»åå«å¾çä¸éä»¶ä¸­å¯¹åºçéç²ç² / LINGORM ç 2026 å¹´ 6 ææ¥ç¨ï¼ä¸­æä¸ºä¸»ï¼
+    const eventsByMonth = {
+      "2026-06": [
+        {
+          date: "2026-06-02",
+          day: "02",
+          tagKey: "éç²ç²",
+          cssTag: "tag-lingling",
+          time: "00:00",
+          title_cn: "å¦®ç»´éåç½å¤ï¼ç§äººæ´»å¨ï¼",
+          title_en: "NIVEA Love Glow Night (Private)",
+          note: ""
+        },
+        {
+          date: "2026-06-03",
+          day: "03",
+          tagKey: "éç²ç²",
+          cssTag: "tag-lingling",
+          time: "00:00",
+          title_cn: "å©ç¢§åççº¿ä¸æ´»å¨ â åäº¬",
+          title_en: "CLINIQUE Ã Lingling â Beijing, China",
+          note: ""
+        },
+        {
+          date: "2026-06-16",
+          day: "16",
+          tagKey: "LINGORM",
+          cssTag: "tag-lingorm",
+          time: "12:00",
+          title_cn: "æ°å§æç¥ä»ªå¼ï¼å¬å¼ï¼",
+          title_en: "New Drama Blessing Ceremony",
+          note: ""
+        },
+        {
+          date: "2026-06-18",
+          day: "18",
+          tagKey: "LINGORM",
+          cssTag: "tag-lingorm",
+          time: "00:00",
+          title_cn: "å¯¶æ ¼éº é«çº§ç å®å·¡å± â æ°å å¡",
+          title_en: "BVLGARI High Jewelry Trunkshow â Singapore",
+          note: ""
+        },
+        {
+          date: "2026-06-19",
+          day: "19",
+          tagKey: "LINGORM",
+          cssTag: "tag-lingorm",
+          time: "00:00",
+          title_cn: "æ°å§å®£æ¨æ´»å¨ï¼å¾å®ï¼",
+          title_en: "Promotion / Media (TBC)",
+          note: ""
+        },
+        {
+          date: "2026-06-22",
+          day: "22",
+          tagKey: "LINGORM",
+          cssTag: "tag-lingorm",
+          time: "00:00",
+          title_cn: "The Touch ç§äººæ´»å¨",
+          title_en: "Private Event (The Touch)",
+          note: ""
+        },
+        {
+          date: "2026-06-24",
+          day: "24",
+          tagKey: "LINGORM",
+          cssTag: "tag-lingorm",
+          time: "18:00",
+          title_cn: "TOPS Of Beauty by Looks â Central Westgateï¼18:00ï¼",
+          title_en: "TOPS Of Beauty by Looks â Central Westgate (6PM)",
+          note: ""
+        },
+        {
+          date: "2026-06-26",
+          day: "26",
+          tagKey: "LINGORM",
+          cssTag: "tag-lingorm",
+          time: "19:00",
+          title_cn: "LOLANE Ã Lingorm æ°ä»»ä»£è¨äººåå¸ä¼ï¼19:00ï¼",
+          title_en: "LOLANE Ã LINGORM â Launch Event (7PM)",
+          note: "äº®ç¸æ´»å¨"
+        },
+        {
+          date: "2026-06-27",
+          day: "27",
+          tagKey: "éç²ç²",
+          cssTag: "tag-lingling",
+          time: "15:00",
+          title_cn: "Mistine çº¿ä¸æ´»å¨ â MISTINE Proï¼15:00ï¼",
+          title_en: "MISTINE Pro Active Perfection (3PM)",
+          note: ""
+        },
+        {
+          date: "2026-06-30",
+          day: "30",
+          tagKey: "LINGORM",
+          cssTag: "tag-lingorm",
+          time: "",
+          title_cn: "å¾å®",
+          title_en: "TBC",
+          note: ""
+        }
+      ],
+      "2026-07": [],
+      "2026-05": [],
+      "2026-08": []
+    };
+
+    const container = document.getElementById('schedule-container');
+    const monthSelect = document.getElementById('month');
+
+    function renderMonth(key){
+      container.innerHTML = '';
+      const items = (eventsByMonth[key] || []).slice();
+      if (!items.length) {
+        const empty = document.createElement('div');
+        empty.className = 'empty';
+        empty.textContent = 'è¯¥æä»½å°æ å¬å¼æ¥ç¨';
+        container.appendChild(empty);
+        return;
+      }
+
+      // group by month title (we already choose the month, keep as single month)
+      const monthWrap = document.createElement('div');
+      monthWrap.className = 'timeline-month';
+
+      const monthTitle = document.createElement('h3');
+      // æ¾ç¤ºä¸­ææä»½
+      const display = monthSelect.options[monthSelect.selectedIndex].text;
+      monthTitle.textContent = display;
+      monthWrap.appendChild(monthTitle);
+
+      const meta = document.createElement('div'); meta.className = 'month-meta';
+      meta.textContent = `${items.length} ä¸ªå¬å¼é¡¹ç®ï¼ä»å±ç¤ºå¬å¼/å·²ç¥æ¡ç®ï¼`;
+      monthWrap.appendChild(meta);
+
+      const list = document.createElement('ul');
+      list.className = 'timeline';
+
+      // sort by date asc
+      items.sort((a,b) => new Date(a.date) - new Date(b.date));
+
+      items.forEach(it => {
+        const li = document.createElement('li');
+        li.className = 'timeline-item';
+
+        const dateBlock = document.createElement('div');
+        dateBlock.className = 'timeline-date';
+        const day = document.createElement('span'); day.className = 'day'; day.textContent = it.day;
+        const time = document.createElement('span'); time.className = 'time'; time.textContent = it.time ? it.time : '';
+        dateBlock.appendChild(day);
+        if (it.time) dateBlock.appendChild(time);
+
+        const content = document.createElement('div');
+        content.className = 'timeline-content';
+
+        const topLine = document.createElement('div');
+        topLine.style.display = 'flex';
+        topLine.style.justifyContent = 'space-between';
+        topLine.style.alignItems = 'center';
+
+        const title = document.createElement('div');
+        title.className = 'timeline-title';
+        title.textContent = it.title_cn || it.title_en;
+
+        const tag = document.createElement('div');
+        tag.className = 'tag ' + (it.cssTag || '');
+        tag.textContent = it.tagKey || '';
+
+        topLine.appendChild(title);
+        topLine.appendChild(tag);
+
+        const sub = document.createElement('div');
+        sub.className = 'timeline-sub';
+        // åæ¾ç¤ºä¸­æè¯´æï¼è¥éè¦æ¾ç¤ºè±æè¯·æå¼ä¸é¢ä¸è¡
+        sub.textContent = it.title_en && it.title_en !== it.title_cn ? it.title_en : '';
+
+        if (it.note) {
+          const note = document.createElement('div');
+          note.style.marginTop = '8px';
+          note.style.color = 'var(--muted)';
+          note.style.fontSize = '13px';
+          note.textContent = it.note;
+          content.appendChild(note);
+        }
+
+        content.appendChild(topLine);
+        if (sub.textContent) content.appendChild(sub);
+
+        li.appendChild(dateBlock);
+        const liInner = document.createElement('div');
+        liInner.appendChild(content);
+        li.appendChild(liInner);
+
+        list.appendChild(li);
+      });
+
+      container.appendChild(monthWrap);
+      container.appendChild(list);
+    }
+
+    // åå§æ¸²æ
+    renderMonth(monthSelect.value);
+
+    monthSelect.addEventListener('change', function(){
+      renderMonth(this.value);
+    });
+
+    // æ¯æå·¦å³é®åæ¢æä»½
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+        const opts = Array.from(monthSelect.options).map(o => o.value);
+        let idx = opts.indexOf(monthSelect.value);
+        if (e.key === 'ArrowLeft') idx = Math.max(0, idx - 1);
+        else idx = Math.min(opts.length - 1, idx + 1);
+        monthSelect.value = opts[idx];
+        renderMonth(monthSelect.value);
+      }
+    });
+  </script>
+</body>
+</html>
+

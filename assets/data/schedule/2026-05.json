@@ -1,0 +1,62 @@
+[
+  {
+    "date": "2026-05-31",
+    "day": "31",
+    "time": "16:00",
+    "kind": "lingorm",
+    "tagText": "LINGORM 双人",
+    "title": "双人生日会",
+    "subtitle": "Birthday party for two",
+    "new": false
+  },
+  {
+    "date": "2026-05-19",
+    "day": "19",
+    "time": "00:00",
+    "kind": "lingling",
+    "tagText": "邝玲玲单人",
+    "title": "Dior Beauty 法国",
+    "subtitle": "Dior Beauty France",
+    "new": false
+  },
+  {
+    "date": "2026-05-16",
+    "day": "16",
+    "time": "15:00",
+    "kind": "lingling",
+    "tagText": "邝玲玲单人",
+    "title": "DIOR eyewear 春夏系列展会",
+    "subtitle": "DIOR eyewear spring/summer showcase",
+    "new": false
+  },
+  {
+    "date": "2026-05-15",
+    "day": "15",
+    "time": "17:00",
+    "kind": "lingling",
+    "tagText": "邝玲玲单人",
+    "title": "Bangkok Bank Mvisa 活动",
+    "subtitle": "Bangkok Bank Mvisa event",
+    "new": false
+  },
+  {
+    "date": "2026-05-07",
+    "day": "07",
+    "time": "19:30",
+    "kind": "lingling",
+    "tagText": "邝玲玲单人",
+    "title": "MEGA 活动",
+    "subtitle": "MEGA event",
+    "new": false
+  },
+  {
+    "date": "2026-05-05",
+    "day": "05",
+    "time": "20:00",
+    "kind": "lingling",
+    "tagText": "邝玲玲单人",
+    "title": "Mistine Party 派对直播",
+    "subtitle": "Mistine Party livestream",
+    "new": false
+  }
+]
