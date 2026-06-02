@@ -80,6 +80,10 @@
     "new": false,
     "materials": [
       {
+        "name": "抖音直播全程",
+        "url": "https://www.bilibili.com/video/BV14AVr6bEG3/?share_source=copy_web&vd_source=1e20b388ca0b2169123c50d0cdfd2ca6"
+      },
+      {
         "name": "曼谷机场出发视频",
         "url": "https://weibo.com/6052943339/R25b5ejmn"
       },
@@ -94,6 +98,10 @@
       {
         "name": "上海快拍",
         "url": "https://weibo.com/1777428517/R27BDw5OD"
+      },
+      {
+        "name": "下班视频",
+        "url": "https://weibo.com/6404838650/R2ihF0Bfb"
       }
     ]
   }
